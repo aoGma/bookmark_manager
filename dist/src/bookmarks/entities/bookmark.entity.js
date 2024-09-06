@@ -54,11 +54,20 @@ __decorate([
     __metadata("design:type", Number)
 ], Bookmarks.prototype, "clicks", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    (0, typeorm_1.CreateDateColumn)({
+        type: 'timestamp',
+        precision: null,
+        default: () => 'CURRENT_TIMESTAMP',
+    }),
     __metadata("design:type", Date)
 ], Bookmarks.prototype, "create_timestamp", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
+    (0, typeorm_1.UpdateDateColumn)({
+        type: 'timestamp',
+        precision: null,
+        default: () => 'CURRENT_TIMESTAMP',
+        onUpdate: 'CURRENT_TIMESTAMP',
+    }),
     __metadata("design:type", Date)
 ], Bookmarks.prototype, "update_timestamp", void 0);
 __decorate([

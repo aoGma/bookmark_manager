@@ -26,6 +26,7 @@ const ENV = process.env.NODE_ENV;
           username: configService.get<string>('DATABASE_USER'),
           password: configService.get<string>('DATABASE_PASSWORD'),
           database: configService.get<string>('DATABASE_NAME'),
+          dateStrings: true,
           synchronize: false,
           entities: ['dist/src/**/entities/*.entity{.js,.ts}'],
           migrations: ['dist/src/migrations/*{.js,.ts}'],

@@ -42,10 +42,19 @@ export class Bookmarks {
   @Column({ default: 0 })
   clicks: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    type: 'timestamp',
+    precision: null,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   create_timestamp: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    type: 'timestamp',
+    precision: null,
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   update_timestamp: Date;
 
   @ManyToMany(() => Tags)

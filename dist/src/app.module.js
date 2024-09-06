@@ -37,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
                         username: configService.get('DATABASE_USER'),
                         password: configService.get('DATABASE_PASSWORD'),
                         database: configService.get('DATABASE_NAME'),
+                        dateStrings: true,
                         synchronize: false,
                         entities: ['dist/src/**/entities/*.entity{.js,.ts}'],
                         migrations: ['dist/src/migrations/*{.js,.ts}'],

@@ -15,6 +15,7 @@ const options = {
     username: configObj.DATABASE_USER,
     password: configObj.DATABASE_PASSWORD,
     database: configObj.DATABASE_NAME,
+    dateStrings: true,
     synchronize: false,
     entities: ['src/**/entities/*.entity{.js,.ts}'],
     migrations: ['src/migrations/*{.js,.ts}'],
