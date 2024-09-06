@@ -6,13 +6,12 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  HttpException,
 } from '@nestjs/common';
 import { BookmarksService } from './bookmarks.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { Bookmarks } from './entities/bookmark.entity';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
+import { IdPipePipe } from 'src/id-pipe/id-pipe.pipe';
 
 @Controller('bookmarks')
 export class BookmarksController {
@@ -32,15 +31,7 @@ export class BookmarksController {
 
   @Get(':id')
   findOne(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: (v) => {
-          if (isNaN(parseInt(v)))
-            throw new HttpException('id应该为数字！', 400);
-        },
-      }),
-    )
+    @Param('id', new IdPipePipe())
     id: string,
   ) {
     return this.bookmarksService.findOne(+id);
@@ -48,15 +39,7 @@ export class BookmarksController {
 
   @Patch(':id')
   update(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: (v) => {
-          if (isNaN(parseInt(v)))
-            throw new HttpException('id应该为数字！', 400);
-        },
-      }),
-    )
+    @Param('id', new IdPipePipe())
     id: string,
     @Body() updateBookmarkDto: UpdateBookmarkDto,
   ) {
@@ -66,15 +49,7 @@ export class BookmarksController {
 
   @Delete(':id')
   remove(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: (v) => {
-          if (isNaN(parseInt(v)))
-            throw new HttpException('id应该为数字！', 400);
-        },
-      }),
-    )
+    @Param('id', new IdPipePipe())
     id: string,
   ) {
     return this.bookmarksService.remove(+id);

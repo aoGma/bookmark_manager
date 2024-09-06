@@ -6,12 +6,11 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  HttpException,
 } from '@nestjs/common';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
+import { IdPipePipe } from 'src/id-pipe/id-pipe.pipe';
 
 @Controller('tags')
 export class TagsController {
@@ -29,15 +28,7 @@ export class TagsController {
 
   @Get(':id')
   findOne(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: (v) => {
-          if (isNaN(parseInt(v)))
-            throw new HttpException('id应该为数字！', 400);
-        },
-      }),
-    )
+    @Param('id', new IdPipePipe())
     id: string,
   ) {
     return this.tagsService.findOne(+id);
@@ -45,15 +36,7 @@ export class TagsController {
 
   @Patch(':id')
   update(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: (v) => {
-          if (isNaN(parseInt(v)))
-            throw new HttpException('id应该为数字！', 400);
-        },
-      }),
-    )
+    @Param('id', new IdPipePipe())
     id: string,
     @Body() updateTagDto: UpdateTagDto,
   ) {
@@ -62,15 +45,7 @@ export class TagsController {
 
   @Delete(':id')
   remove(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: (v) => {
-          if (isNaN(parseInt(v)))
-            throw new HttpException('id应该为数字！', 400);
-        },
-      }),
-    )
+    @Param('id', new IdPipePipe())
     id: string,
   ) {
     return this.tagsService.remove(+id);
