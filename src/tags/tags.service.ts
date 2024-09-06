@@ -53,7 +53,7 @@ export class TagsService {
         throw new HttpException('更新标签错误！', 500);
       }
     }
-    return '更新成功！';
+    return '更新标签成功！';
   }
 
   async remove(id: number) {
@@ -72,6 +72,6 @@ export class TagsService {
         throw new HttpException('删除标签错误！', 500);
       }
     }
-    return '删除成功！';
+    return '删除标签成功！';
   }
 }

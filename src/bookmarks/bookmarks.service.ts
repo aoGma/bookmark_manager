@@ -102,7 +102,7 @@ export class BookmarksService {
         throw new HttpException('更新书签错误！', 500);
       }
     }
-    return '更新成功！';
+    return '更新书签成功！';
   }
 
   async remove(id: number) {
@@ -121,6 +121,6 @@ export class BookmarksService {
         throw new HttpException('删除书签错误！', 500);
       }
     }
-    return '删除成功！';
+    return '删除书签成功！';
   }
 }
