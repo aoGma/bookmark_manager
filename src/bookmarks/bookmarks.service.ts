@@ -22,7 +22,10 @@ export class BookmarksService {
       if (tagsEntity.length !== tags.length) {
         const existingTagIds = tagsEntity.map((tag) => tag.id);
         const missingTagIds = tags.filter((id) => !existingTagIds.includes(id));
-        throw new HttpException(`tags: ${missingTagIds.join(', ')}不存在`, 400);
+        throw new HttpException(
+          `tags: ${missingTagIds.join(', ')}不存在！`,
+          400,
+        );
       }
     }
     const newBookmark = this.bookmarksRepository.create({
@@ -34,10 +37,10 @@ export class BookmarksService {
     } catch (err) {
       // Url重复
       if (err?.errno === 1062) {
-        throw new HttpException('该条书签url已存在', 400);
+        throw new HttpException('该条书签url已存在！', 400);
       }
     }
-    return '添加书签成功';
+    return '添加书签成功！';
   }
 
   async findAll() {
@@ -54,7 +57,7 @@ export class BookmarksService {
       },
     });
     if (!bookmark) {
-      throw new HttpException('找不到该书签', 400);
+      throw new HttpException('找不到该书签！', 400);
     }
     return bookmark;
   }
@@ -72,7 +75,10 @@ export class BookmarksService {
       if (tagsEntity.length !== tags.length) {
         const existingTagIds = tagsEntity.map((tag) => tag.id);
         const missingTagIds = tags.filter((id) => !existingTagIds.includes(id));
-        throw new HttpException(`tags: ${missingTagIds.join(', ')}不存在`, 400);
+        throw new HttpException(
+          `tags: ${missingTagIds.join(', ')}不存在！`,
+          400,
+        );
       }
     }
     const bookmark = await this.bookmarksRepository.findOne({
@@ -81,7 +87,7 @@ export class BookmarksService {
       },
     });
     if (!bookmark) {
-      throw new HttpException('找不到该书签，无法修改', 400);
+      throw new HttpException('找不到该书签，无法修改！', 400);
     }
     Object.assign(bookmark, updateBookmarkDto);
     if (tagsEntity.length) {
@@ -91,15 +97,30 @@ export class BookmarksService {
       await this.bookmarksRepository.save(bookmark);
     } catch (err) {
       if (err?.errno === 1062) {
-        throw new HttpException('要更改的目标书签已存在', 400);
+        throw new HttpException('要更改的目标书签已存在！', 400);
       } else if (!err) {
-        throw new HttpException('更新书签错误', 500);
+        throw new HttpException('更新书签错误！', 500);
       }
     }
     return '更新成功！';
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} bookmark`;
+  async remove(id: number) {
+    const bookmark = await this.bookmarksRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!bookmark) {
+      throw new HttpException('找不到该书签!', 400);
+    }
+    try {
+      await this.bookmarksRepository.remove(bookmark);
+    } catch (err) {
+      if (!err) {
+        throw new HttpException('删除书签错误！', 500);
+      }
+    }
+    return '删除成功！';
   }
 }

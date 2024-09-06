@@ -5,7 +5,7 @@ export class CreateTagDto {
   name: string;
 
   @IsString({
-    message: 'desc为字符串类型',
+    message: 'desc为字符串类型！',
   })
   @IsOptional()
   desc?: string;

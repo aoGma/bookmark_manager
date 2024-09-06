@@ -20,7 +20,7 @@ export class CreateBookmarkDto {
   url: string;
 
   @IsString({
-    message: 'desc为字符串类型',
+    message: 'desc为字符串类型！',
   })
   @IsOptional()
   desc?: string = '';
@@ -30,13 +30,13 @@ export class CreateBookmarkDto {
   ilk?: BookmarksIlk;
 
   @IsBoolean({
-    message: 'active为数字布尔类型(0,1)',
+    message: 'active为数字布尔类型(0,1)！',
   })
   @IsOptional()
   active?: boolean;
 
   @IsArray()
   @IsOptional()
-  @IsNumber({}, { each: true, message: 'id必须是数字类型' })
+  @IsNumber({}, { each: true, message: 'id必须是数字类型！' })
   tags?: number[];
 }

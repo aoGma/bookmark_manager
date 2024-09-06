@@ -36,7 +36,8 @@ export class BookmarksController {
       'id',
       new ParseIntPipe({
         exceptionFactory: (v) => {
-          if (isNaN(parseInt(v))) throw new HttpException('id应该为数字', 400);
+          if (isNaN(parseInt(v)))
+            throw new HttpException('id应该为数字！', 400);
         },
       }),
     )
@@ -51,7 +52,8 @@ export class BookmarksController {
       'id',
       new ParseIntPipe({
         exceptionFactory: (v) => {
-          if (isNaN(parseInt(v))) throw new HttpException('id应该为数字', 400);
+          if (isNaN(parseInt(v)))
+            throw new HttpException('id应该为数字！', 400);
         },
       }),
     )
@@ -63,7 +65,18 @@ export class BookmarksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({
+        exceptionFactory: (v) => {
+          if (isNaN(parseInt(v)))
+            throw new HttpException('id应该为数字！', 400);
+        },
+      }),
+    )
+    id: string,
+  ) {
     return this.bookmarksService.remove(+id);
   }
 }

@@ -77,6 +77,11 @@
       "path": "./node_modules/cz-customizable"
     }
   },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",
