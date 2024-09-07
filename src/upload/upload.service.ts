@@ -19,7 +19,6 @@ export class UploadService {
         return {
           name: _this.text(),
           url: _this.attr('href'),
-          desc: _this.text(),
         };
       })
       .get();

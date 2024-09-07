@@ -26,7 +26,7 @@ export class Bookmarks {
   @Column({ nullable: false, unique: true, length: 500 })
   url: string;
 
-  @Column()
+  @Column({ nullable: true })
   desc: string;
 
   @Column({
