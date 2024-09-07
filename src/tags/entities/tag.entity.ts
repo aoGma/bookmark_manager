@@ -8,6 +8,6 @@ export class Tags {
   @Column({ unique: true, nullable: false })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   desc: string;
 }

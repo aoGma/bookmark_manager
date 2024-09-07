@@ -45,17 +45,17 @@ export class BookmarksService {
 
   async findAll() {
     return await this.bookmarksRepository
-      .createQueryBuilder('bookmark')
-      .leftJoinAndSelect('bookmark.tags', 'tag')
+      .createQueryBuilder('bookmarks')
+      .leftJoinAndSelect('bookmarks.tags', 'tag')
       .getMany();
   }
 
   async findOne(id: number) {
-    const bookmark = await this.bookmarksRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const bookmark = await this.bookmarksRepository
+      .createQueryBuilder('bookmarks')
+      .leftJoinAndSelect('bookmarks.tags', 'tag')
+      .where({ id })
+      .getOne();
     if (!bookmark) {
       throw new HttpException('找不到该书签！', 400);
     }
