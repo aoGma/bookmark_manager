@@ -23,8 +23,28 @@ export class UploadService {
       })
       .get();
     const entities = this.bookmarksRepository.create(links);
-    const insertedEntities = await this.bookmarksRepository.save(entities);
-    const successCount = insertedEntities.length;
-    return `成功插入${successCount}条书签`;
+    let successCount = 0;
+    let duplicateCount = 0;
+    let errorCount = 0;
+    await Promise.all(
+      entities.map(async (entity) => {
+        try {
+          await this.bookmarksRepository.save(entity);
+          successCount++;
+        } catch (err) {
+          if (err.errno === 1062) {
+            duplicateCount++;
+            errorCount++;
+          } else {
+            errorCount++;
+          }
+        }
+      }),
+    );
+    return {
+      successCount,
+      errorCount,
+      duplicateCount,
+    };
   }
 }
