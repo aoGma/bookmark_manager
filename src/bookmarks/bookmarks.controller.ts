@@ -32,26 +32,26 @@ export class BookmarksController {
   @Get(':id')
   findOne(
     @Param('id', new IdPipePipe())
-    id: string,
+    id: number,
   ) {
-    return this.bookmarksService.findOne(+id);
+    return this.bookmarksService.findOne(id);
   }
 
   @Patch(':id')
   update(
     @Param('id', new IdPipePipe())
-    id: string,
+    id: number,
     @Body() updateBookmarkDto: UpdateBookmarkDto,
   ) {
     const { tags = [] } = updateBookmarkDto;
-    return this.bookmarksService.update(+id, updateBookmarkDto, tags);
+    return this.bookmarksService.update(id, updateBookmarkDto, tags);
   }
 
   @Delete(':id')
   remove(
     @Param('id', new IdPipePipe())
-    id: string,
+    id: number,
   ) {
-    return this.bookmarksService.remove(+id);
+    return this.bookmarksService.remove(id);
   }
 }

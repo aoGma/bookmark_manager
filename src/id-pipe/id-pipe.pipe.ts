@@ -7,6 +7,6 @@ export class IdPipePipe implements PipeTransform {
     if (isNaN(num)) {
       throw new HttpException('id应该为数字！', 400);
     }
-    return value;
+    return num;
   }
 }

@@ -23,7 +23,7 @@ export class BookmarksService {
         const existingTagIds = tagsEntity.map((tag) => tag.id);
         const missingTagIds = tags.filter((id) => !existingTagIds.includes(id));
         throw new HttpException(
-          `tags: ${missingTagIds.join(', ')}不存在！`,
+          `tags: ${missingTagIds.join(', ')} 不存在！`,
           400,
         );
       }
@@ -118,7 +118,7 @@ export class BookmarksService {
       await this.bookmarksRepository.remove(bookmark);
     } catch (err) {
       if (!err) {
-        throw new HttpException('删除书签错误！', 500);
+        throw new HttpException('删除书签失败！', 500);
       }
     }
     return '删除书签成功！';

@@ -14,7 +14,7 @@ export class UploadService {
     const fileStr = file.buffer.toString();
     const handle = load(fileStr);
     const links = handle('a')
-      .map(function (i, el) {
+      .map(function (_, el) {
         const _this = handle(el);
         return {
           name: _this.text(),

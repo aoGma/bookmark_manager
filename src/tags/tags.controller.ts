@@ -29,25 +29,25 @@ export class TagsController {
   @Get(':id')
   findOne(
     @Param('id', new IdPipePipe())
-    id: string,
+    id: number,
   ) {
-    return this.tagsService.findOne(+id);
+    return this.tagsService.findOne(id);
   }
 
   @Patch(':id')
   update(
     @Param('id', new IdPipePipe())
-    id: string,
+    id: number,
     @Body() updateTagDto: UpdateTagDto,
   ) {
-    return this.tagsService.update(+id, updateTagDto);
+    return this.tagsService.update(id, updateTagDto);
   }
 
   @Delete(':id')
   remove(
     @Param('id', new IdPipePipe())
-    id: string,
+    id: number,
   ) {
-    return this.tagsService.remove(+id);
+    return this.tagsService.remove(id);
   }
 }

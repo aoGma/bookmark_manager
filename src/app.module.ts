@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { TagsModule } from './tags/tags.module';
 import { UploadModule } from './upload/upload.module';
+import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
 const ENV = process.env.NODE_ENV;
 
 @Module({
@@ -39,6 +41,8 @@ const ENV = process.env.NODE_ENV;
     TagsModule,
     BookmarksModule,
     UploadModule,
+    UsersModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
