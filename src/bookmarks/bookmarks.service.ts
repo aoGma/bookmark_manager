@@ -4,6 +4,12 @@ import { Bookmarks } from './entities/bookmark.entity';
 import { In, Repository } from 'typeorm';
 import { Tags } from '../tags/entities/tag.entity';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
+import {
+  FilterOperator,
+  paginate,
+  PaginateConfig,
+  PaginateQuery,
+} from 'nestjs-paginate';
 
 @Injectable()
 export class BookmarksService {
@@ -43,11 +49,26 @@ export class BookmarksService {
     return '添加书签成功！';
   }
 
-  async findAll() {
-    return await this.bookmarksRepository
+  async findAll(query: PaginateQuery) {
+    const config: PaginateConfig<Bookmarks> = {
+      relations: ['tags'],
+      sortableColumns: [
+        'id',
+        'name',
+        'clicks',
+        'tags.name',
+        'create_timestamp',
+        'update_timestamp',
+      ],
+      filterableColumns: {
+        active: [FilterOperator.EQ],
+        ilk: [FilterOperator.IN],
+      },
+    };
+    const queryBuilder = this.bookmarksRepository
       .createQueryBuilder('bookmarks')
-      .leftJoinAndSelect('bookmarks.tags', 'tag')
-      .getMany();
+      .leftJoinAndSelect('bookmarks.tags', 'tag');
+    return await paginate(query, queryBuilder, config);
   }
 
   async findOne(id: number) {

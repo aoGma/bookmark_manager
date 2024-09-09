@@ -12,6 +12,8 @@ import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { Bookmarks } from './entities/bookmark.entity';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { IdPipePipe } from 'src/id-pipe/id-pipe.pipe';
+import { Paginate } from 'nestjs-paginate';
+import { PaginateQueryValidation } from './interface';
 
 @Controller('bookmarks')
 export class BookmarksController {
@@ -25,8 +27,8 @@ export class BookmarksController {
   }
 
   @Get()
-  findAll() {
-    return this.bookmarksService.findAll();
+  findAll(@Paginate() query: PaginateQueryValidation) {
+    return this.bookmarksService.findAll(query);
   }
 
   @Get(':id')

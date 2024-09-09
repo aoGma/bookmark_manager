@@ -3,9 +3,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/user.entity';
-import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { Roles } from 'src/roles/entities/role.entity';
+import {
+  FilterOperator,
+  paginate,
+  PaginateConfig,
+  PaginateQuery,
+} from 'nestjs-paginate';
 
 @Injectable()
 export class UsersService {
@@ -45,21 +50,40 @@ export class UsersService {
     return '添加用户成功！';
   }
 
-  async findAll() {
-    const users = await this.usersRepository.query(
-      // !保证id是users表的不为空
-      `SELECT * FROM roles RIGHT JOIN users ON users.roleId = roles.id`,
-    );
-    // return await this.usersRepository
-    //   .createQueryBuilder('users')
-    //   .leftJoin('users.role', 'role')
-    //   .addSelect('role.roleName')
-    //   .getMany();
-    return users.map((o) => {
-      // TODO SQL优化
-      delete o.roleId;
-      return plainToInstance(Users, o);
+  async findAll(query: PaginateQuery) {
+    const config: PaginateConfig<Users> = {
+      relations: ['role'],
+      sortableColumns: [
+        'id',
+        'username',
+        'create_timestamp',
+        'update_timestamp',
+      ],
+      filterableColumns: {
+        active: [FilterOperator.IN],
+        roleName: [FilterOperator.IN],
+      },
+      select: [
+        'id',
+        'username',
+        'role.roleName',
+        'active',
+        'create_timestamp',
+        'update_timestamp',
+      ],
+    };
+    const queryBuilder = this.usersRepository
+      .createQueryBuilder('users')
+      .leftJoin('users.role', 'role');
+    const res = await paginate(query, queryBuilder, config);
+    // 如果你不希望返回字段带有前缀，可以手动映射它们
+    res.data = res.data.map((item) => {
+      const { role, ...rest } = item;
+      return Object.assign(rest, {
+        roleName: role ? role.roleName : null,
+      }) as unknown as Users;
     });
+    return res;
   }
 
   async findOne(id: number) {

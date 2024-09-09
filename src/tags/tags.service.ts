@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tags } from './entities/tag.entity';
 import { UpdateTagDto } from './dto/update-tag.dto';
+import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
 export class TagsService {
@@ -24,8 +25,14 @@ export class TagsService {
     return '添加标签成功！';
   }
 
-  async findAll() {
-    return await this.tagsRepository.find();
+  findAll(query: PaginateQuery): Promise<Paginated<Tags>> {
+    return paginate(query, this.tagsRepository, {
+      sortableColumns: ['id', 'name'],
+      nullSort: 'last',
+      defaultSortBy: [['id', 'DESC']],
+      searchableColumns: ['name', 'desc'],
+      select: ['id', 'name', 'desc'],
+    });
   }
 
   async findOne(id: number) {

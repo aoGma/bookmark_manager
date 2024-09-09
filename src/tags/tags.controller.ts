@@ -11,6 +11,8 @@ import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { IdPipePipe } from 'src/id-pipe/id-pipe.pipe';
+import { PaginateQueryValidation } from 'src/bookmarks/interface';
+import { Paginate } from 'nestjs-paginate';
 
 @Controller('tags')
 export class TagsController {
@@ -22,8 +24,8 @@ export class TagsController {
   }
 
   @Get()
-  findAll() {
-    return this.tagsService.findAll();
+  findAll(@Paginate() query: PaginateQueryValidation) {
+    return this.tagsService.findAll(query);
   }
 
   @Get(':id')

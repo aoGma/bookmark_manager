@@ -30,7 +30,7 @@ export class CreateBookmarkDto {
   ilk?: BookmarksIlk;
 
   @IsBoolean({
-    message: 'active为数字布尔类型(0,1)！',
+    message: 'active为数字布尔类型(true, false)！',
   })
   @IsOptional()
   active?: boolean;

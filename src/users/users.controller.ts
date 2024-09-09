@@ -11,6 +11,8 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IdPipePipe } from 'src/id-pipe/id-pipe.pipe';
+import { Paginate } from 'nestjs-paginate';
+import { PaginateQueryValidation } from 'src/bookmarks/interface';
 
 @Controller('users')
 export class UsersController {
@@ -22,8 +24,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Paginate() query: PaginateQueryValidation) {
+    return this.usersService.findAll(query);
   }
 
   @Get(':id')
