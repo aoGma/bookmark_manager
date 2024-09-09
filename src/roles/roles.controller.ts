@@ -11,6 +11,8 @@ import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { IdPipePipe } from 'src/id-pipe/id-pipe.pipe';
+import { Paginate } from 'nestjs-paginate';
+import { PaginateQueryValidation } from 'src/bookmarks/interface';
 
 @Controller('roles')
 export class RolesController {
@@ -22,8 +24,8 @@ export class RolesController {
   }
 
   @Get()
-  findAll() {
-    return this.rolesService.findAll();
+  findAll(@Paginate() query: PaginateQueryValidation) {
+    return this.rolesService.findAll(query);
   }
 
   @Get(':id')

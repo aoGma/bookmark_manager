@@ -4,6 +4,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Roles } from './entities/role.entity';
 import { Repository } from 'typeorm';
+import { paginate, PaginateConfig, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
 export class RolesService {
@@ -24,8 +25,11 @@ export class RolesService {
     return '添加角色成功！';
   }
 
-  async findAll() {
-    return this.rolesRepository.find();
+  async findAll(query: PaginateQuery) {
+    const config: PaginateConfig<Roles> = {
+      sortableColumns: ['id', 'roleName'],
+    };
+    return await paginate(query, this.rolesRepository, config);
   }
 
   async findOne(id: number) {
