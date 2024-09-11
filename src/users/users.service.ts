@@ -117,9 +117,8 @@ export class UsersService {
       // 用户名重复
       if (err?.errno === 1062) {
         throw new HttpException('要更改的目标用户名已存在！', 400);
-      } else if (!err) {
-        throw new HttpException('更新用户信息失败！', 500);
       }
+      throw new HttpException('更新用户信息失败！', 500);
     }
     return '更新用户信息成功！';
   }
@@ -135,10 +134,8 @@ export class UsersService {
     }
     try {
       await this.usersRepository.remove(user);
-    } catch (err) {
-      if (!err) {
-        throw new HttpException('删除用户失败！', 500);
-      }
+    } catch {
+      throw new HttpException('删除用户失败！', 500);
     }
     return '删除用户成功！';
   }

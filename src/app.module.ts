@@ -8,6 +8,7 @@ import { TagsModule } from './tags/tags.module';
 import { UploadModule } from './upload/upload.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
+import { MenusModule } from './menus/menus.module';
 const ENV = process.env.NODE_ENV;
 
 @Module({
@@ -43,6 +44,7 @@ const ENV = process.env.NODE_ENV;
     UploadModule,
     UsersModule,
     RolesModule,
+    MenusModule,
   ],
   controllers: [AppController],
   providers: [AppService],

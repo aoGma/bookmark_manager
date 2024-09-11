@@ -119,9 +119,8 @@ export class BookmarksService {
     } catch (err) {
       if (err?.errno === 1062) {
         throw new HttpException('要更改的目标书签已存在！', 400);
-      } else if (!err) {
-        throw new HttpException('更新书签错误！', 500);
       }
+      throw new HttpException('更新书签错误！', 500);
     }
     return '更新书签成功！';
   }
@@ -137,10 +136,8 @@ export class BookmarksService {
     }
     try {
       await this.bookmarksRepository.remove(bookmark);
-    } catch (err) {
-      if (!err) {
-        throw new HttpException('删除书签失败！', 500);
-      }
+    } catch {
+      throw new HttpException('删除书签失败！', 500);
     }
     return '删除书签成功！';
   }

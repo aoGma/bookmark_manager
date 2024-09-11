@@ -55,10 +55,8 @@ export class TagsService {
     Object.assign(tag, updateTagDto);
     try {
       await this.tagsRepository.save(tag);
-    } catch (err) {
-      if (!err) {
-        throw new HttpException('更新标签错误！', 500);
-      }
+    } catch {
+      throw new HttpException('更新标签错误！', 500);
     }
     return '更新标签成功！';
   }

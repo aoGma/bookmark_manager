@@ -55,9 +55,8 @@ export class RolesService {
     } catch (err) {
       if (err?.errno === 1062) {
         throw new HttpException('要更改的目标角色已存在！', 400);
-      } else if (!err) {
-        throw new HttpException('更新角色错误！', 500);
       }
+      throw new HttpException('更新角色错误！', 500);
     }
     return '更新角色成功！';
   }
@@ -69,10 +68,8 @@ export class RolesService {
     }
     try {
       await this.rolesRepository.remove(role);
-    } catch (err) {
-      if (!err) {
-        throw new HttpException('删除角色错误！', 500);
-      }
+    } catch {
+      throw new HttpException('删除角色错误！', 500);
     }
     return '删除角色成功！';
   }
