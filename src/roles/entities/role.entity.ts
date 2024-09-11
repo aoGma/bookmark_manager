@@ -1,5 +1,12 @@
+import { Menu } from '../../menus/entities/menu.entity';
 import { Users } from '../../users/entities/user.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Roles {
@@ -11,4 +18,7 @@ export class Roles {
 
   @OneToMany(() => Users, (users) => users.role, { cascade: true })
   users: Users[];
+
+  @ManyToMany(() => Menu, (menu) => menu.roles)
+  menus: Menu[];
 }

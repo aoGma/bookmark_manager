@@ -1,6 +1,8 @@
+import { Roles } from '../../roles/entities/role.entity';
 import {
   Column,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   Tree,
   TreeChildren,
@@ -41,4 +43,7 @@ export class Menu {
 
   @TreeParent({ onDelete: 'CASCADE' })
   parent?: Menu;
+
+  @ManyToMany(() => Roles, (roles) => roles.menus, { cascade: true })
+  roles: Roles[];
 }
